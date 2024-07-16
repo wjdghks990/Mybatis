@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dept">
+	
+	<!-- 레코드 1개 포장할 때마다 적용 -->
+	<resultMap type="db.vo.DeptVo" id="deptMap">
+		<!-- <result property="no" column="deptno"/> 
+		db의 컬럼명을 달리 줄 수 있긴 함(Vo에서 이름도 바꿔야함) 그러나, 굳이 다르게 할 필요는 없음 -->
+		<!-- resultType은 Vo만 그대로 가져와서 처리할 때 사용하고, resultMap은 컬럼명이 다르거나 다른 부가적인 행동을 할 때 사용한다. -->
+		
+		<!-- 해당 부서의 사원들의 목록도 같이 조회하기 때문에 resultMap을 사용한 것 -->
+		<result property="deptno" column="deptno"/> <!-- 생략 불가! (pk - fk) -->
+		<collection property="sa_list"
+					column="{deptno=deptno}"
+					select="sawon_list_deptno"
+		/>
+	</resultMap>
+		
+	<!-- 레코드 1개 포장할 때마다 적용 -->
+	<resultMap type="db.vo.SawonVo" id="sawonMap">
+		<result property="sabun" column="sabun"/>
+		<collection property="go_list"
+					column="{sabun=sabun}"
+					select="gogek_list_godam"
+		/>
+	</resultMap>
+	
+	<!-- xml을 여러개 쓰는 것은 지양 -->
+ 	<select id="gogek_list_godam" resultType="db.vo.GogekVo">
+		select * from gogek where godam=#{ sabun }
+	</select> 
+	
+	<!-- xml을 여러개 쓰는 것은 지양 -->
+ 	<select id="sawon_list_deptno" resultMap="sawonMap">
+		select * from sawon where deptno=#{ deptno }
+	</select> 
+
+	<select id="dept_list" resultMap="deptMap">
+		select * from dept
+	</select>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
