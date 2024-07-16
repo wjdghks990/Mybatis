@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="sawon">
+
+<!-- 	 select : 반드시!! resultType(포장타입) or resultMap 속성 정의!! 
+ 	<select id="sawon_list" resultType="vo.SawonVo">
+ 		select * from sawon
+ 	</select>
+ 	부서별 조회 
+ 					parameterType: 전달인자타입
+ 					resultType: select 결과에 대한 포장타입 (각 레코드에 대한)
+ 	
+ 	<select id="sawon_list_deptno" parameterType="int" resultType="vo.SawonVo">
+ 		select * from sawon where deptno =#{ deptno } 
+ 	</select>
+ 	
+ 	직급별 조회
+ 	<select id="sawon_list_sajob" parameterType="String" resultType="vo.SawonVo">
+ 		select * from sawon where sajob =#{ sajob } 
+ 	</select> -->
+ 	
+ 	
+ 	<!-- Dynamic query -->
+    <select id="sawon_list_condition" parameterType="Map" resultType="vo.SawonVo">
+    	select * from sawon
+    	<!-- 검색조건 추가 -->
+    	<trim prefix="where" prefixOverrides="and">
+    		
+    		<!-- 부서검색 -->
+    		<if test="deptno!=null">
+    			deptno =#{ deptno }
+    		</if>
+    		<!-- 직급검색 -->
+    		<if test="sajob!=null">
+    			and sajob =#{ sajob }
+    		</if>
+    		<!-- 직급검색 -->
+    		<if test="sasex!=null">
+    			and sasex =#{ sasex }
+    		</if>
+    		<if test="hire_year_period!=null">
+    			and floor(to_number(to_char(sahire,'YYYY'))/10)*10 = #{ hire_year_period }
+    		</if>
+    		
+    	</trim>
+    </select>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
