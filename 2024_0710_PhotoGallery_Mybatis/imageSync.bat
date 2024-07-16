@@ -1,0 +1,2 @@
+del  F:\WebStudy\2024_0710_PhotoGallery_Mybatis\src\main\webapp\images\*.*
+copy F:\WebStudy\.metadata\.plugins\org.eclipse.wst.server.core\tmp1\wtpwebapps\2024_0710_PhotoGallery_Mybatis\images\*.* F:\WebStudy\2024_0710_PhotoGallery_Mybatis\src\main\webapp\images
