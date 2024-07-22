@@ -23,7 +23,7 @@ public class MemberLoginFormAction extends HttpServlet {
 			throws ServletException, IOException {
 
 		// Dispatcher형식으로 호출
-		String forward_page = "member_login_from.jsp";
+		String forward_page = "member_login_form.jsp";
 		RequestDispatcher disp = request.getRequestDispatcher(forward_page);
 		disp.forward(request, response);
 
